@@ -31,4 +31,24 @@ app.post('/usuario', (request, response)=> {
     response.status(201).send('Usuario cadastrado com sucesso')
 })
 
+app.put('/usuario/:id', (request, response) => {
+    let index = buscarUsuario(request.params.id)
+    usuarios[index] = {
+        ...usuarios[index],
+        nome: request.body.nome,
+        cpf: request.body.cpf,
+        email: request.body.email,
+        telefone: request.body.telefone,
+        logradouro: request.body.logradouro,
+        complemento: request.body.complemento,
+        bairro: request.body.bairro,
+        uf: request.body.uf
+    }
+    response.json(usuarios[index])
+})
+
+function buscarUsuario(id) {
+return usuarios.findIndex((usuario)=> usuario.id == id)
+}
+
 export default app
