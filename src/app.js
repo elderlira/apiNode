@@ -33,14 +33,16 @@ app.get('/usuario/:id', (req, resp)=> {
 
 app.post('/usuario', (req, resp)=> {
     usuarios.push(req.body)
-    resp.status(201).send('Usuario cadastrado com sucesso')
+    const {nome} = req.body
+    resp.status(201).send(`${nome} foi cadastrado com sucesso`)
 })
 
 app.put('/usuario/:id', (req, resp) => {
     let index = buscarUsuario(req.params.id)
-    const {nome, cpf, email, telefone, logradouro, complemento, bairro, uf} = req.body
+    const {id, nome, cpf, email, telefone, logradouro, complemento, bairro, uf} = req.body
 
     usuarios[index] = {
+        id,
         nome,
         cpf,
         email,
@@ -56,7 +58,13 @@ app.put('/usuario/:id', (req, resp) => {
 
 app.delete('/usuario/:id', (req, resp)=> {
     const index = buscarUsuario(req.params.id)
-    const { nome } = usuarios[index]
+    if (index === 1) {
+        var { nome } = usuarios[index-1]
+
+    } else {
+        var { nome } = usuarios[index]
+
+    }
     usuarios.splice(index, 1)
     resp.send(`${nome} foi removido com sucesso`)
 })
