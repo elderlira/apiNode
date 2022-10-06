@@ -26,6 +26,11 @@ app.get('/usuario', (req, resp)=> {
     resp.status(200).json(usuarios)
 })
 
+app.get('/usuario/:id', (req, resp)=> {
+    const index = buscarUsuario(req.params.id)
+    resp.json(usuarios[index])
+})
+
 app.post('/usuario', (req, resp)=> {
     usuarios.push(req.body)
     resp.status(201).send('Usuario cadastrado com sucesso')
