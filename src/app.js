@@ -18,33 +18,35 @@ const usuarios = [
     }
 ]
 
-app.get('/', (request, response)=> {
-    response.status(200).send('Pagina inicial')
+app.get('/', (req, resp)=> {
+    resp.status(200).send('Pagina inicial')
 })
 
-app.get('/usuario', (request, response)=> {
-    response.status(200).json(usuarios)
+app.get('/usuario', (req, resp)=> {
+    resp.status(200).json(usuarios)
 })
 
-app.post('/usuario', (request, response)=> {
-    usuarios.push(request.body)
-    response.status(201).send('Usuario cadastrado com sucesso')
+app.post('/usuario', (req, resp)=> {
+    usuarios.push(req.body)
+    resp.status(201).send('Usuario cadastrado com sucesso')
 })
 
-app.put('/usuario/:id', (request, response) => {
-    let index = buscarUsuario(request.params.id)
+app.put('/usuario/:id', (req, resp) => {
+    let index = buscarUsuario(req.params.id)
+    const {nome, cpf, email, telefone, logradouro, complemento, bairro, uf} = req.body
+
     usuarios[index] = {
-        ...usuarios[index],
-        nome: request.body.nome,
-        cpf: request.body.cpf,
-        email: request.body.email,
-        telefone: request.body.telefone,
-        logradouro: request.body.logradouro,
-        complemento: request.body.complemento,
-        bairro: request.body.bairro,
-        uf: request.body.uf
+        nome,
+        cpf,
+        email,
+        telefone,
+        logradouro,
+        complemento,
+        bairro,
+        uf
     }
-    response.json(usuarios[index])
+    
+    resp.json(usuarios[index])
 })
 
 function buscarUsuario(id) {
