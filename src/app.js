@@ -54,6 +54,13 @@ app.put('/usuario/:id', (req, resp) => {
     resp.json(usuarios[index])
 })
 
+app.delete('/usuario/:id', (req, resp)=> {
+    const index = buscarUsuario(req.params.id)
+    const { nome } = usuarios[index]
+    usuarios.splice(index, 1)
+    resp.send(`${nome} foi removido com sucesso`)
+})
+
 function buscarUsuario(id) {
 return usuarios.findIndex((usuario)=> usuario.id == id)
 }
