@@ -1,9 +1,5 @@
 import users from "../model/user.js"
 
-function buscarUsuario(id) {
-    return users.findById((usuario)=> usuario.id == id)
-    }
-
 export default { 
     index(req, res) {
         res.status(200).send('Pagina inicial')
@@ -16,9 +12,11 @@ export default {
     },
 
     getById(req, res) {
-        users.findById((err, user)=> {
-            const index = buscarUsuario(req.params.id)
-            res.json(user[index])
+        const id = req.params.id
+        users.findById(id, (err, user)=> {
+            if(!err) {
+                res.send(user)
+            }
         })
     },
 
