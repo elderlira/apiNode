@@ -1,2 +1,5 @@
 //node_module
 node_modules
+
+//db data
+src/config/dbCredentials.js
