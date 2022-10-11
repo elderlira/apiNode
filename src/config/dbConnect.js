@@ -1,9 +1,7 @@
 import mongoose from "mongoose";
-// import dbCredentials from "./dbCredentials.js"
+import dbCredentials from "./dbCredentials.js"
 
-const enviromentConnect = "mongodb+srv://doctorFenix:doctorFenixEBR@cluster0.qtlsnmj.mongodb.net/doctorFenix-node"
-
-// const localConnect = 'mongodb://localhost:27017/user'
+const enviromentConnect = `mongodb+srv://doctorFenix:${dbCredentials.password}@cluster0.qtlsnmj.mongodb.net/${dbCredentials.db}`
 
 mongoose.connect(enviromentConnect)
 
