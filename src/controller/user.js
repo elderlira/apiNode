@@ -1,48 +1,44 @@
+import users from "../model/user.js"
+
 function buscarUsuario(id) {
-    return usuarios.findIndex((usuario)=> usuario.id == id)
+    return users.findById((usuario)=> usuario.id == id)
     }
 
-    const usuarios = [
-        {
-            "id": 1,
-            "nome": "elder",
-            "cpf":"000010010101",
-            "email": "email@email.com",
-            "telefone":"7112345678",
-            "logradouro":"endereco",
-            "complemento":"",
-            "bairro":"olimpo",
-            "uf":"ba"
-        }
-    ]
-
 export default { 
-
-    index(req, resp) {
-        resp.status(200).send('Pagina inicial')
+    index(req, res) {
+        res.status(200).send('Pagina inicial')
     },
 
-    getAll (req, resp) {
-        resp.status(200).json(usuarios)
+    getAll (req, res) {
+        users.find((err, users) => {
+            res.status(200).json(users)
+        })
     },
 
-    getById(req, resp) {
-        const index = buscarUsuario(req.params.id)
-        resp.json(usuarios[index])
+    getById(req, res) {
+        users.findById((err, user)=> {
+            const index = buscarUsuario(req.params.id)
+            res.json(user[index])
+        })
     },
 
-    create(req, resp) {
-        usuarios.push(req.body)
-    const {nome} = req.body
-    resp.status(201).send(`${nome} foi cadastrado com sucesso`)
+    create(req, res) {
+        const user = new users(req.body)
+
+        user.save((err)=> {
+            if (err) {
+                res.status(500).send({message: `${err.message} - Erro ao cadastrar o usuario`})
+            } else {
+                res.status(201).send(`${user.nome} foi cadastrado com sucesso`)
+            }
+        })
     },
 
-    update(req, resp) {
+    update(req, res) {
         let index = buscarUsuario(req.params.id)
-        const {id, nome, cpf, email, telefone, logradouro, complemento, bairro, uf} = req.body
+        const {nome, cpf, email, telefone, logradouro, complemento, bairro, uf} = req.body
     
         usuarios[index] = {
-            id,
             nome,
             cpf,
             email,
@@ -53,10 +49,10 @@ export default {
             uf
         }
         
-        resp.json(usuarios[index])
+        res.json(usuarios[index])
     },
 
-    remove(req, resp) {
+    remove(req, res) {
         const index = buscarUsuario(req.params.id)
         if (index === 1) {
             var { nome } = usuarios[index-1]
@@ -66,7 +62,7 @@ export default {
     
         }
         usuarios.splice(index, 1)
-        resp.send(`${nome} foi removido com sucesso`)
+        res.send(`${nome} foi removido com sucesso`)
     }
 }
 
