@@ -10,7 +10,8 @@ const userSchemas = new mongoose.Schema({
     logradouro: {type: String, required: true},
     complemento: {type: String},
     bairro: {type: String, required: true},
-    uf: {type: String, required: true}
+    uf: {type: String, required: true},
+    nivel: {type: Number, default: 0}
 })
 
 const users = mongoose.model('users', userSchemas)
