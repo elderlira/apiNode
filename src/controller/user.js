@@ -7,7 +7,11 @@ export default {
 
     getAll (req, res) {
         users.find((err, users) => {
-            res.status(200).json(users)
+            if(!err) {
+                res.status(200).json(users)
+            } else {
+                res.status(500).send({message: 'Não foi possível carregar a lista. Contacte o administrador.'})
+            }
         })
     },
 
@@ -15,52 +19,55 @@ export default {
         const id = req.params.id
         users.findById(id, (err, user)=> {
             if(!err) {
-                res.send(user)
+                res.status(200).send(user)
+            } else {
+                res.status(400).send({message: 'Usuário não localizado ou inexistente'})
+            }
+        })
+    },
+
+    getByName(req, res) {
+        const userSearch = req.body.nome
+        users.find(userSearch, (err, user)=> {
+            if(!err) {
+                res.status(200).send(user)
+            } else {
+                res.status(500).send({message: 'Usuário não encontrado ou inexistente'})
             }
         })
     },
 
     create(req, res) {
         const user = new users(req.body)
-
         user.save((err)=> {
             if (err) {
-                res.status(500).send({message: `${err.message} - Erro ao cadastrar o usuario`})
+                res.status(500).send({message: 'Erro ao cadastrar o usuario. Contacte o administrador.'})
             } else {
-                res.status(201).send(`${user.nome} foi cadastrado com sucesso`)
+                res.status(201).send(`${user.nomeCompleto} foi cadastrado com sucesso`)
             }
         })
     },
 
     update(req, res) {
-        let index = buscarUsuario(req.params.id)
-        const {nome, cpf, email, telefone, logradouro, complemento, bairro, uf} = req.body
-    
-        usuarios[index] = {
-            nome,
-            cpf,
-            email,
-            telefone,
-            logradouro,
-            complemento,
-            bairro,
-            uf
-        }
-        
-        res.json(usuarios[index])
+        const id = req.params.id
+        users.findByIdAndUpdate(id, ({$set: req.body}), (err, user)=> {
+            if(!err) {
+                res.status(200).send(`Os dados do usuário, ${user.nomeCompleto}, foram atualizados com sucesso`)
+            } else {
+                res.status(500).send({message: 'Não foi possível atualizar os dados. Contacte o administrador'})
+            }
+        })
     },
 
     remove(req, res) {
-        const index = buscarUsuario(req.params.id)
-        if (index === 1) {
-            var { nome } = usuarios[index-1]
-    
-        } else {
-            var { nome } = usuarios[index]
-    
-        }
-        usuarios.splice(index, 1)
-        res.send(`${nome} foi removido com sucesso`)
+        const id = req.params.id
+        users.findByIdAndDelete(id, (err, user)=> {
+            if(!err) {
+                res.status(200).send(`${user.nomeCompleto} foi deletado com sucesso`)
+            } else {
+                res.status(500).send({message: 'Não foi possível deletar o usuario. Contacte o administrador'})
+            }
+        })
     }
 }
 
