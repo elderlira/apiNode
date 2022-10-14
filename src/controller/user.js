@@ -15,6 +15,28 @@ export default {
         })
     },
 
+    getByName(req, res) {
+        const nome = req.query.nomeCompleto
+        users.find({'nomeCompleto': nome}, (err, user)=> {
+         if(!err) {
+            res.status(200).send(user)
+         } else {
+            res.status(500).send({message: 'Usuário não encontrado'})
+         }
+        })
+     },
+
+     getByCpf(req, res) {
+        const cpf = req.query.cpf
+        users.find({'cpf': cpf}, (err, user)=> {
+            if(!err) {
+                res.status(200).send(user)
+            } else {
+                res.status(500).send({message: 'Usuario não encontrado'})
+            }
+        })
+     },
+
     getById(req, res) {
         const id = req.params.id
         users.findById(id, (err, user)=> {
@@ -22,17 +44,6 @@ export default {
                 res.status(200).send(user)
             } else {
                 res.status(400).send({message: 'Usuário não localizado ou inexistente'})
-            }
-        })
-    },
-
-    getByName(req, res) {
-        const userSearch = req.body.nome
-        users.find(userSearch, (err, user)=> {
-            if(!err) {
-                res.status(200).send(user)
-            } else {
-                res.status(500).send({message: 'Usuário não encontrado ou inexistente'})
             }
         })
     },
