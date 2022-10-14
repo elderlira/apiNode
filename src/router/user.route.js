@@ -3,9 +3,11 @@ import userController from '../controller/user.js'
 
 const router = Router()
 
-// router.get('/',  userController.index)
-
 router.get('/', userController.getAll)
+
+router.get('/busca', userController.getByName)
+
+router.get('/buscacpf', userController.getByCpf)
 
 router.get('/:id', userController.getById)
 
