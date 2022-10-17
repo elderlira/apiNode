@@ -1,4 +1,4 @@
-import users from "../model/user.js"
+import Users from "../model/User.js"
 
 export default { 
     index(req, res) {
@@ -6,9 +6,9 @@ export default {
     },
 
     getAll (req, res) {
-        users.find((err, users) => {
+        Users.find((err, Users) => {
             if(!err) {
-                res.status(200).json(users)
+                res.status(200).json(Users)
             } else {
                 res.status(500).send({message: 'Não foi possível carregar a lista. Contacte o administrador.'})
             }
@@ -17,7 +17,7 @@ export default {
 
     getByName(req, res) {
         const nome = req.query.nomeCompleto
-        users.find({'nomeCompleto': nome}, (err, user)=> {
+        Users.find({'nomeCompleto': nome}, (err, user)=> {
          if(!err) {
             res.status(200).send(user)
          } else {
@@ -28,7 +28,7 @@ export default {
 
      getByCpf(req, res) {
         const cpf = req.query.cpf
-        users.find({'cpf': cpf}, (err, user)=> {
+        Users.find({'cpf': cpf}, (err, user)=> {
             if(!err) {
                 res.status(200).send(user)
             } else {
@@ -39,7 +39,7 @@ export default {
 
     getById(req, res) {
         const id = req.params.id
-        users.findById(id, (err, user)=> {
+        Users.findById(id, (err, user)=> {
             if(!err) {
                 res.status(200).send(user)
             } else {
@@ -49,19 +49,23 @@ export default {
     },
 
     create(req, res) {
-        const user = new users(req.body)
+        const user = new Users(req.body)
         user.save((err)=> {
-            if (err) {
-                res.status(500).send({message: 'Erro ao cadastrar o usuario. Contacte o administrador.'})
-            } else {
-                res.status(201).send(`${user.nomeCompleto} foi cadastrado com sucesso`)
+            if (!err) {
+                res.status(201).json({
+                    msg: `${user.nomeCompleto} foi cadastrado com sucesso`
+                })
+            } 
+            else {
+                console.log(req.body)
+                res.json({message: 'Erro ao cadastrar o usuario. Contacte o administrador.'})
             }
         })
     },
 
     update(req, res) {
         const id = req.params.id
-        users.findByIdAndUpdate(id, ({$set: req.body}), (err, user)=> {
+        Users.findByIdAndUpdate(id, ({$set: req.body}), (err, user)=> {
             if(!err) {
                 res.status(200).send(`Os dados do usuário, ${user.nomeCompleto}, foram atualizados com sucesso`)
             } else {
@@ -72,7 +76,7 @@ export default {
 
     remove(req, res) {
         const id = req.params.id
-        users.findByIdAndDelete(id, (err, user)=> {
+        Users.findByIdAndDelete(id, (err, user)=> {
             if(!err) {
                 res.status(200).send(`${user.nomeCompleto} foi deletado com sucesso`)
             } else {
