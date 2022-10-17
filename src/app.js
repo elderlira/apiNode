@@ -12,12 +12,13 @@ db.once("open", ()=> {
 const app = express()
 
 app.use(express.json())
-app.use('/users', userRouter)
-app.use((req, resp, next) => {
-    resp.header("Access-Control-Allow-Origin", "*");
-	//Quais são os métodos que a conexão pode realizar na API
-    resp.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE');
-    app.use(cors());
+
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    app.use(cors())
+    app.use('/users', userRouter)
     next();
 })
 
