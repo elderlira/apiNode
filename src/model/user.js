@@ -11,10 +11,10 @@ const userSchemas = new mongoose.Schema({
     complemento: {type: String},
     bairro: {type: String, required: true},
     uf: {type: String, required: true},
-    nivel: {type: Number, default: 0},
+    nivel: {type: String, default: 0},
     servicos: {type: String} //later replace by-> mongose.Schema.Types.ObjectId, ref: 'service' 
 })
 
-const users = mongoose.model('users', userSchemas)
+const Users = mongoose.model('users', userSchemas)
 
-export default users
+export default Users
