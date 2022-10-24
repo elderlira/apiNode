@@ -48,19 +48,13 @@ export default {
         })
     },
 
-    create(req, res) {
-        const user = new Users(req.body)
-        const cpf = req.body.cpf
-        user.save((err)=> {
-            if (!err) {
-                res.status(201).json({message: `${user.nomeCompleto} foi cadastrado com sucesso`})
-            } else { 
-                if (err.keyValue.cpf === cpf) {
-                    return res.status(400).json({message: `${err.keyValue.cpf} ja cadastrado no sistemas`})
-                }
-                res.status(400).json({message: 'Erro ao cadastrar o usuario. Contacte o administrador.'})
-            }
-        })
+    async create(req, res) {
+        try {
+            const user = await Users.create(req.body)
+            return res.status(201).json({message: ` ${user.nomeCompleto} cadastrado com sucesso`})
+        } catch (erro) {
+            return res.status(400).json({message: `${req.body.cpf} já possui cadastro` })
+        }
     },
 
     update(req, res) {
