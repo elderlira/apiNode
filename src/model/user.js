@@ -7,7 +7,7 @@ const userSchemas = new Schema({
     cpf: {type: String, required: true, unique: true, max: 11},
     email: {type: String, required: true},
     telefone: {type: String, required: true},
-    whatsaspp: {type: String},
+    whatsapp: {type: String},
     instagram: {type: String},
     cep: {type: String, required: true, max: 7},
     logradouro: {type: String, required: true},
