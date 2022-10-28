@@ -1,4 +1,5 @@
 import Users from "../model/User.js"
+import Service from '../model/service.js'
 
 export default { 
     index(req, res) {
@@ -30,7 +31,14 @@ export default {
         const cpf = req.query.cpf
         Users.find({'cpf': cpf}, (err, user)=> {
             if(!err) {
-                res.status(200).send(user)
+               Service.find({'userId': user[0]._id}, (err, servico)=> {
+                if(!err) {
+                    var dados = {}
+                    dados.user = user[0]
+                    dados.service = servico
+                    res.status(200).send(dados)
+                }
+               })
             } else {
                 res.status(500).send({message: 'Usuario não encontrado'})
             }
@@ -41,7 +49,14 @@ export default {
         const id = req.params.id
         Users.findById(id, (err, user)=> {
             if(!err) {
-                res.status(200).send(user)
+                Service.find({'userId': user._id}, (err, servico)=> {
+                    if(!err) {
+                        var dados = {}
+                        dados.user = user
+                        dados.service = servico
+                        res.status(200).send(dados)
+                    }
+                })
             } else {
                 res.status(400).send({message: 'Usuário não localizado ou inexistente'})
             }
