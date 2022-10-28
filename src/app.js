@@ -1,5 +1,6 @@
 import express from 'express'
 import userRouter from './router/user.route.js'
+import serviceRouter from './router/service.route.js'
 import cors from 'cors'
 import db from './config/dbConnect.js'
 
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     app.use(cors())
     app.use('/users', userRouter)
+    app.use('/service', serviceRouter)
     next();
 })
 
