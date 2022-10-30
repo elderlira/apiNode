@@ -1,4 +1,6 @@
 import Services from '../model/service.js'
+import Users from "../model/User.js"
+import sendEmail from '../Email/sendEmail.js'
 
 export default {
 
@@ -14,10 +16,19 @@ export default {
         })
     },
 
-    async create(req, res) {
+    create(req, res) {
         try {
-            await Services.create(req.body)
-            res.status(201).json({message: 'Equipamento a ser analisado registrado com sucesso'})
+            const {email, userId} = req.body
+            Users.findById(userId, (err, user)=> {
+                if(!err) {
+                    Services.create(req.body)
+                    sendEmail(email, user.nomeCompleto)
+                    res.status(201).json({
+                        message: 'Equipamento a ser analisado registrado com sucesso',
+                        userData: user.nomeCompleto
+                    })
+                }
+            })
         } catch (err) {
             res.status(400).json({message: 'Erro ao registrar o serviço. Favor contact o administrador'})
         }
