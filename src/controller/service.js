@@ -24,7 +24,7 @@ export default {
                     Services.create(req.body)
                     sendEmail(email, user.nomeCompleto)
                     res.status(201).json({
-                        message: 'Equipamento a ser analisado registrado com sucesso',
+                        message: 'seu equipamento a ser analisado foi registrado com sucesso',
                         userData: user.nomeCompleto
                     })
                 }
