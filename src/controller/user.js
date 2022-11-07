@@ -74,9 +74,9 @@ export default {
 
     update(req, res) {
         const id = req.params.id
-        Users.findByIdAndUpdate(id, ({$set: req.body}), (err, user)=> {
+        Users.findByIdAndUpdate(id, ({$set: req.body}), (err)=> {
             if(!err) {
-                res.status(200).send(`Os dados do usuário, ${user.nomeCompleto}, foram atualizados com sucesso`)
+                res.status(200).send({message: 'Os dados do usuário foram atualizados com sucesso'})
             } else {
                 res.status(500).send({message: 'Não foi possível atualizar os dados. Contacte o administrador'})
             }
