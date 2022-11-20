@@ -1,5 +1,6 @@
 import Users from "../model/User.js"
 import Service from '../model/service.js'
+import sendEmail from "../Email/sendEmail.js"
 
 export default { 
     index(req, res) {
@@ -66,6 +67,8 @@ export default {
     async create(req, res) {
         try {
             const user = await Users.create(req.body)
+            const message = `seja bem vindo a Doctor Fenix. Seu registrado foi criado com sucesso`
+            sendEmail(user.email, user.nomeCompleto, message)
             return res.status(201).json({message: ` ${user.nomeCompleto} cadastrado com sucesso`})
         } catch (erro) {
             return res.status(400).json({message: `${req.body.cpf} já possui cadastro` })
@@ -87,11 +90,10 @@ export default {
         const id = req.params.id
         Users.findByIdAndDelete(id, (err, user)=> {
             if(!err) {
-                res.status(200).send({message: `${user.nomeCompleto} foi deletado com sucesso`})
+                res.status(200).send(`${user.nomeCompleto} foi deletado com sucesso`)
             } else {
                 res.status(500).send({message: 'Não foi possível deletar o usuario. Contacte o administrador'})
             }
         })
     }
 }
-
