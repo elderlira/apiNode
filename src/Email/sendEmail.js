@@ -1,7 +1,7 @@
 import nodeMailer from 'nodemailer'
 import emailData from './emailCredential.js'
 
-async function sendEmail(target, name) {
+async function sendEmail(target, name, message) {
     let transporter = nodeMailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
@@ -20,7 +20,7 @@ async function sendEmail(target, name) {
             to: `${target}`,
             subject: 'doctor fenix',
             text: 'Serviço cadastrado com sucesso',
-            html: `<b> ${name} </b> seu servico foi cadastrado`
+            html: `<b> ${name} </b> ${message}`
         })
     } catch (erro) {
         console.log(erro)
