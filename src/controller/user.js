@@ -87,7 +87,7 @@ export default {
         const id = req.params.id
         Users.findByIdAndDelete(id, (err, user)=> {
             if(!err) {
-                res.status(200).send(`${user.nomeCompleto} foi deletado com sucesso`)
+                res.status(200).send({message: `${user.nomeCompleto} foi deletado com sucesso`})
             } else {
                 res.status(500).send({message: 'Não foi possível deletar o usuario. Contacte o administrador'})
             }
