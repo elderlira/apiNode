@@ -22,10 +22,10 @@ export default {
             Users.findById(userId, (err, user)=> {
                 if(!err) {
                     Services.create(req.body)
-                    const message = 'seu serviço foi cadastrado com sucesso'
+                    const message = 'seu equipamento a ser analisado foi registrado com sucesso'
                     sendEmail(email, user.nomeCompleto, message)
                     res.status(201).json({
-                        message: 'seu equipamento a ser analisado foi registrado com sucesso',
+                        message,
                         userData: user.nomeCompleto
                     })
                 }
