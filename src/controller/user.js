@@ -67,9 +67,9 @@ export default {
     async create(req, res) {
         try {
             const user = await Users.create(req.body)
-            const message = `seja bem vindo a Doctor Fenix. Seu registrado foi criado com sucesso`
+            const message = `Seja bem vindo a Doctor Fenix. Seu cadastro foi registrado com sucesso`
             sendEmail(user.email, user.nomeCompleto, message)
-            return res.status(201).json({message: ` ${user.nomeCompleto} cadastrado com sucesso`})
+            return res.status(201).json({message: ` ${user.nomeCompleto}`})
         } catch (erro) {
             return res.status(400).json({message: `${req.body.cpf} já possui cadastro` })
         }
