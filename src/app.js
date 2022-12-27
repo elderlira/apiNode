@@ -1,6 +1,7 @@
 import express from 'express'
 import userRouter from './router/user.route.js'
 import serviceRouter from './router/service.route.js'
+import budget from './router/budget.route.js'
 import cors from 'cors'
 import db from './config/dbConnect.js'
 
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
     app.use(cors())
     app.use('/users', userRouter)
     app.use('/service', serviceRouter)
+    app.use('/budget', budget)
     next();
 })
 
