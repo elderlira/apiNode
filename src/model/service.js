@@ -4,7 +4,6 @@ import { Schema } from "mongoose";
 const serviceSchemas = new Schema({
     id: { type: String },
     userId: { type: String },
-    serviceOrder: { type: String },
     droneMark: { type: String },
     droneModel: { type: String },
     droneSerial: { type: String },
