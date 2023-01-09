@@ -1,6 +1,7 @@
 import Services from '../model/service.js'
 import Users from "../model/User.js"
 import sendEmail from '../Email/sendEmail.js'
+import { json } from 'express'
 
 export default {
 
@@ -14,6 +15,19 @@ export default {
                 res.status(400).json({message: 'Não foi possível obter a lista de serviço ou não existe'})
             }
         })
+    },
+
+    getById(req, res) {
+        const id = req.params.id
+        try {
+            Services.find({'userId': id}, (err, Serv) => {
+                if(!err) {
+                    res.status(200).json(Serv)
+                }
+            })
+        } catch (erro) {
+            throw new Error(erro)
+        }
     },
 
     create(req, res) {
