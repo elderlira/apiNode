@@ -7,7 +7,6 @@ export default ({
     create(req, res) {
         try {
             const { idService } = req.body
-            console.log(idService)
             Service.findById(idService, (err)=> {
                 if(err) {
                     throw new Error(err)
@@ -19,5 +18,18 @@ export default ({
         } catch (erro) {
             console.log('erro', erro)
         }
+    },
+
+    getById(req, res) {
+        const id = req.params.id
+  try {
+    Budget.find({'idService': id}, (err, budget)=> {
+        if(!err) {
+            res.status(200).json(budget)
+        }
+    })
+  } catch (erro) {
+    throw new Error(erro)
+  }
     }
 })
