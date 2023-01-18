@@ -8,10 +8,10 @@ export default {
     getAll(req, res) {
         Services.find((err, Serv)=> {
             if(!err) {
-                console.log(Serv)
+                // console.log(Serv)
                 res.status(200).json(Serv)
             } else {
-                console.log(err)
+                // console.log(err)
                 res.status(400).json({message: 'Não foi possível obter a lista de serviço ou não existe'})
             }
         })
@@ -20,7 +20,7 @@ export default {
     getById(req, res) {
         const id = req.params.id
         try {
-            Services.find({'userId': id}, (err, Serv) => {
+            Services.find({'_id': id}, (err, Serv) => {
                 if(!err) {
                     res.status(200).json(Serv)
                 }
