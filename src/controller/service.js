@@ -5,8 +5,8 @@ import sendEmail from "../Email/sendEmail.js";
 export default {
   async getAll(req, res) {
     try {
-      res.status(200).json(services)
       const services = await Services.find().populate('userId')
+      res.status(200).json(services)
     } catch(erro) {
       res.status(200).json({message: `${erro}`})
       throw new Error(erro)
