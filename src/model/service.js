@@ -3,7 +3,7 @@ import { Schema } from "mongoose";
 
 const serviceSchemas = new Schema({
     id: { type: String },
-    userId: { type: String },
+    userId: { type: mongoose.Types.ObjectId, ref: 'users' },
     droneMark: { type: String },
     droneModel: { type: String },
     droneSerial: { type: String },
