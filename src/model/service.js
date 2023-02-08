@@ -3,7 +3,8 @@ import { Schema } from "mongoose";
 
 const serviceSchemas = new Schema({
     id: { type: String },
-    userId: { type: mongoose.Types.ObjectId, ref: 'users' },
+    userId: { type: mongoose.Types.ObjectId, ref: 'users' }, //clientId
+    budgetId: { type: mongoose.Types.ObjectId, ref: 'budget' },
     droneMark: { type: String },
     droneModel: { type: String },
     droneSerial: { type: String },
@@ -21,6 +22,7 @@ const serviceSchemas = new Schema({
     initialAnalyze: { type: String }
     // dataRemocao, dataAtualizacao, dataCriacao
     //idUserRemoca, idUserAtualicacao, idUserCriacao
+    //atrelar quem vai realizar o servico
 })
 
 const Services = mongoose.model('services', serviceSchemas)
