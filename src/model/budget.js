@@ -9,6 +9,6 @@ const budgetSchema = new Schema({
     value: { type: Number },
 })
 
-const budget = mongoose.model('buget', budgetSchema)
+const budget = mongoose.model('budget', budgetSchema)
 
 export default budget
