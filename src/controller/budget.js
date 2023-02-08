@@ -5,18 +5,20 @@ import Budget from '../model/budget.js'
 export default ({
 
     create(req, res) {
+        const idService = req.body[0].idService
         try {
-            const { idService } = req.body
             Service.findById(idService, (err)=> {
                 if(err) {
                     throw new Error(err)
                 }
-                req.body?.data.forEach(item => {   
+                req.body.forEach(item => {   
                     Budget.create(item)
                 });
+                res.status(201).json({ message: 'Orçamento cadastrado com sucesso!'})
             })
         } catch (erro) {
             console.log('erro', erro)
+            res.status(400).json({message: erro})
         }
     },
 
