@@ -1,11 +1,14 @@
 import Users from "../model/User.js";
 import Services from "../model/service.js";
+import Budget from "../model/budget.js"
 import sendEmail from "../Email/sendEmail.js";
 
 export default {
   async getAll(req, res) {
     try {
       const services = await Services.find().populate('userId')
+      const budget = await Budget.find().populate("idService")
+      console.log(budget)
       res.status(200).json(services)
     } catch(erro) {
       res.status(200).json({message: `${erro}`})
