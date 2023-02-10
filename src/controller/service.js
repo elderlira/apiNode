@@ -7,8 +7,6 @@ export default {
   async getAll(req, res) {
     try {
       const services = await Services.find().populate('userId')
-      const budget = await Budget.find().populate("idService")
-      console.log(budget)
       res.status(200).json(services)
     } catch(erro) {
       res.status(200).json({message: `${erro}`})
